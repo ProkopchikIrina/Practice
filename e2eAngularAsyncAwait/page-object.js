@@ -48,25 +48,26 @@ class PageObject {
     }
 }
 
-class PageObjectValues extends PageObject  {
+class PageObjectValues extends PageObject {
     get linkChineseVersionHrefAttr() {
-        return this.getElementAttributeValue(super.linkChineseVersion,'href');
+        return this.getElementAttributeValue(super.linkChineseVersion, 'href');
     }
 
     get linkToHeadingHrefAttr() {
-        return this.getElementAttributeValue(super.linkToHeading,'href')
+        return this.getElementAttributeValue(super.linkToHeading, 'href')
     }
 
     get searchValueAttr() {
-        return this.getElementAttributeValue(super.search,'value')
+        return this.getElementAttributeValue(super.search, 'value')
     }
 
     get searchResultsAttr() {
-        return this.getElementAttributeValue(super.search,'.search-results')
+        return this.getElementAttributeValue(super.search, '.search-results')
     }
 
-    getElementAttributeValue(element,attr){
+    getElementAttributeValue(element, attr) {
         return element.getAttribute(attr);
     }
 }
+
 module.exports = PageObjectValues;
