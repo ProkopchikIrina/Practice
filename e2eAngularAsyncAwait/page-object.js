@@ -35,7 +35,7 @@ class PageObject {
         return element(by.css('[href="events"]'));
     }
 
-    get linkChineseLangVersion() {
+    get linkChineseVersion() {
         return element(by.css('.link[title="中文版"]'));
     }
 
@@ -47,4 +47,26 @@ class PageObject {
         return element(by.css('.header-link'));
     }
 }
-module.exports = PageObject;
+
+class PageObjectValues extends PageObject  {
+    get linkChineseVersionHrefAttr() {
+        return this.getElementAttributeValue(super.linkChineseVersion,'href');
+    }
+
+    get linkToHeadingHrefAttr() {
+        return this.getElementAttributeValue(super.linkToHeading,'href')
+    }
+
+    get searchValueAttr() {
+        return this.getElementAttributeValue(super.search,'value')
+    }
+
+    get searchResultsAttr() {
+        return this.getElementAttributeValue(super.search,'.search-results')
+    }
+
+    getElementAttributeValue(element,attr){
+        return element.getAttribute(attr);
+    }
+}
+module.exports = PageObjectValues;

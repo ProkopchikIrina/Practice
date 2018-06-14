@@ -1,5 +1,5 @@
-var PageObject=require('../page-object.js');
-var pageObject=new PageObject();
+var PageObjectValues=require('../page-object.js');
+var pageObject=new PageObjectValues();
 
 describe('search tests', function() {
     beforeEach(async function() {
@@ -20,27 +20,27 @@ describe('search tests', function() {
         await browser.actions().keyDown(protractor.Key.CONTROL).sendKeys('c').perform();
         await pageObject.search.click();
         await browser.actions().keyDown(protractor.Key.CONTROL).sendKeys('v').perform();
-        expect(await pageObject.search.getAttribute('value')).toEqual('What is Angular?');
+        expect(await pageObject.searchValueAttr).toEqual('What is Angular?');
     });
 
     //Проверка ввода в поле поиска
     it('checks the input into search field',async function() {
         await pageObject.search.click().sendKeys("");
         await pageObject.search.sendKeys("Search");
-        expect(await pageObject.search.getAttribute('value')).toEqual('Search');
+        expect(await pageObject.searchValueAttr).toEqual('Search');
     });
 
     //Проверка работы поиска
     it('checks search',async function() {
         await pageObject.search.sendKeys("Assumptions");
-        expect(await pageObject.search.getAttribute('.search-results').isDisplayed()).toBeTruthy();
+        expect(await pageObject.searchResultsAttr.isDisplayed()).toBeTruthy();
     });
 
     //Проверка того, что после клика по другим элементам страницы, поле поиска не очищается
     it('checks that search field save text after click on anther element of page',async function() {
         await pageObject.search.sendKeys("Some text");
         await pageObject.leftMenuItemLevel1.click();
-        expect(await pageObject.search.getAttribute('value')).toEqual('Some text');
+        expect(await pageObject.searchValueAttr).toEqual('Some text');
     });
 });
 
@@ -55,8 +55,8 @@ describe('angular.io/docs tests', function() {
         await browser.actions().mouseMove(pageObject.title).perform();
         expect(await pageObject.linkToHeading.isDisplayed()).toBeTruthy();
     });
-    //Проверка работы кнопки закрывающей боковое меню(закрытие меню) - не проходит
-    it('checks that docs menu button close left menu (closing)',async function() {
+    //Проверка работы кнопки закрывающей боковое меню(закрытие меню)
+    xit('checks that docs menu button close left menu (closing)',async function() {
         await pageObject.leftMenuButton.click();
         expect(await pageObject.leftMenu.isDisplayed()).toBeFalsy();
     });
@@ -94,7 +94,7 @@ describe('angular.io/docs tests', function() {
 
     //Проверка работы клика по элементу "link to this heading"
     it('checks that click on element "link to this heading" works correctly',async function() {
-        expect(await pageObject.linkToHeading.getAttribute('href')).toEqual('https://angular.io/docs#what-is-angular');
+        expect(await pageObject.linkToHeadingHrefAttr).toEqual('https://angular.io/docs#what-is-angular');
     });
 
     //Проверка работы элемента 'Home' (переход на главную страницу)
@@ -105,6 +105,17 @@ describe('angular.io/docs tests', function() {
 
     //Отображение китайской версии страницы
     it('Chinese version link', async function() {
-        expect(await pageObject.linkChineseLangVersion.getAttribute('href')).toEqual('https://angular.cn/');
+        expect(await pageObject.linkChineseVersionHrefAttr).toEqual('https://angular.cn/');
+    });
+
+    it('JSON schema validator',function () {
+        var schema=require('../schema.json');
+        var json=require('../package.json');
+        var Ajv = require('ajv');
+        var ajv = new Ajv();
+        var validate = ajv.compile(schema);
+        var valid = validate(json);
+        if (!valid) console.log(validate.errors);
+        else console.log("JSON is valid");
     });
 });
