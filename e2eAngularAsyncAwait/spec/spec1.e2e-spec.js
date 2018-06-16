@@ -1,7 +1,7 @@
 var PageObjectValues = require('../page-object.js');
 var validator = require('../json-validator.js');
 var pageObject = new PageObjectValues();
-
+validator.addSchemas();
 describe('search tests', function () {
     beforeEach(async function () {
         await  browser.get('http://www.angular.io/docs');
@@ -9,7 +9,7 @@ describe('search tests', function () {
     });
 
     //Проверка вставки в поле поиска
-    xit('checks the pasting into search field', async function () {
+    it('checks the pasting into search field', async function () {
         await browser
             .actions()
             .mouseMove(pageObject.title, {x: 0, y: 0})
@@ -57,7 +57,7 @@ describe('angular.io/docs tests', function () {
         expect(await pageObject.linkToHeading.isDisplayed()).toBeTruthy();
     });
     //Проверка работы кнопки закрывающей боковое меню(закрытие меню)
-    xit('checks that docs menu button close left menu (closing)', async function () {
+    it('checks that docs menu button close left menu (closing)', async function () {
         await pageObject.leftMenuButton.click();
         expect(await pageObject.leftMenu.isDisplayed()).toBeFalsy();
     });
@@ -109,9 +109,14 @@ describe('angular.io/docs tests', function () {
         expect(await pageObject.linkChineseVersionHrefAttr).toEqual('https://angular.cn/');
     });
 
-    it('JSON validator', function () {
-        var schema = require('../schema.json');
-        var json = require('../package.json');
-        validator.validateJSON(schema, json);
+
+});
+fdescribe('JSON validation tests', function () {
+    it('package-lock.json validator', function () {
+        validator.validateJSON('package-lock');
+    });
+
+    it('package.json validator', function () {
+        validator.validateJSON('package');
     });
 });
