@@ -108,9 +108,8 @@ describe('angular.io/docs tests', function () {
     it('Chinese version link', async function () {
         expect(await pageObject.linkChineseVersionHrefAttr).toEqual('https://angular.cn/');
     });
-
-
 });
+
 fdescribe('JSON validation tests', function () {
     it('package-lock.json validator', function () {
         validator.validateJSON('package-lock');

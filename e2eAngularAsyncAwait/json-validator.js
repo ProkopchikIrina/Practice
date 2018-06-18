@@ -30,7 +30,7 @@ function validateJSON(key) {
 function findSchemas() {
     var recursiveReadSync = require('recursive-readdir-sync'), files;
     try {
-        files = recursiveReadSync(__dirname);
+        files = recursiveReadSync(__dirname + '/json-schemas');
     } catch (err) {
         if (err.errno === 34) {
             console.log('Path does not exist');
@@ -40,9 +40,7 @@ function findSchemas() {
     }
     var schemasArray = [];
     files.forEach(function (file) {
-        if (path.extname(file) == '.json' && (path.dirname(file).search("node_modules") == -1) && (path.dirname(file).search("json-schemas") > 0)) {
-            schemasArray.push(file);
-        }
+        schemasArray.push(file);
     });
     return schemasArray;
 }
